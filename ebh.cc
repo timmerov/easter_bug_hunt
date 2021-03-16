@@ -19,6 +19,10 @@ second stage is to multiply the first character by 2 pi...
 and xor it with all of the remaining characters.
 
 third stage is to base 64 encode.
+note: this is not official base 64 encoding.
+namely it assumes the input to be encoded does not end in a zero.
+which is good enough for our purposes.
+we test and flag the case so we can alter the input.
 
 test patterns:
 
@@ -230,6 +234,12 @@ public:
         /** compute the number of bits we're going to encode. **/
         int len = message_.size();
         int bits = len * 9;
+
+        /** special case: message ending with 0 is an error. **/
+        if (message.back() == 0) {
+            LOG("error: input to base64encode ends in zero.");
+            exit(1);
+        }
 
         /** add trailing 0's so we don't read past the end of the buffer. **/
         message_.push_back(0);
