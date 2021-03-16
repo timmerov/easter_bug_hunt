@@ -9,4 +9,13 @@ happy hunting!
 ## build instructions:
 
     $ g++ -o ebh ebh.cc
-    $ ./ebh
+
+## to encode a message
+
+    $ ./ebh -e "what is this?"
+    stringofrandomsymbols
+
+## to decode a message
+
+    $ ./ebh -d stringofrandomsymbols
+    what is this?
